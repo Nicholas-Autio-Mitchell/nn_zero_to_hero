@@ -1,0 +1,93 @@
+2023-06-03 00:43:40,636 INFO  [gpt.py:32  ] Using device: cpu
+2023-06-03 00:43:40,644 INFO  [gpt.py:41  ] All chars:
+ !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+2023-06-03 00:43:40,644 INFO  [gpt.py:42  ] vocab_size = 65
+2023-06-03 00:43:40,721 INFO  [gpt.py:65  ] data tensor shape = torch.Size([1115394])
+2023-06-03 00:43:40,721 INFO  [gpt.py:72  ] train_data.shape = torch.Size([1003854]), val_data.shape = torch.Size([111540])
+2023-06-03 00:43:40,722 INFO  [gpt.py:104 ] Xb.shape = torch.Size([4, 32]), Yb.shape = torch.Size([4, 32])
+2023-06-03 00:43:40,733 INFO  [gpt.py:334 ] Model trainable parameters: 2120225
+2023-06-03 00:43:40,733 INFO  [gpt.py:335 ] Model total parameters:     2120225
+2023-06-03 00:43:40,733 INFO  [gpt.py:339 ] Training the model...
+2023-06-03 00:43:40,733 INFO  [gpt.py:341 ] ------------------------------------
+2023-06-03 00:43:40,733 INFO  [gpt.py:342 ]   step  |  train loss  |  val loss
+2023-06-03 00:43:40,733 INFO  [gpt.py:343 ] ------------------------------------
+2023-06-03 00:43:42,374 INFO  [gpt.py:355 ]      0  |   3.883881   |  3.890311
+2023-06-03 00:43:59,959 INFO  [gpt.py:355 ]    500  |   2.179851   |  2.217263
+2023-06-03 00:44:17,786 INFO  [gpt.py:355 ]   1000  |   1.996287   |  2.088192
+2023-06-03 00:44:35,416 INFO  [gpt.py:355 ]   1500  |   1.897765   |  2.009958
+2023-06-03 00:44:53,090 INFO  [gpt.py:355 ]   2000  |   1.823365   |  1.970545
+2023-06-03 00:45:10,890 INFO  [gpt.py:355 ]   2500  |   1.767941   |  1.923661
+2023-06-03 00:45:28,636 INFO  [gpt.py:355 ]   3000  |   1.742351   |  1.878199
+2023-06-03 00:45:46,448 INFO  [gpt.py:355 ]   3500  |   1.706721   |  1.862172
+2023-06-03 00:46:04,486 INFO  [gpt.py:355 ]   4000  |   1.695649   |  1.864287
+2023-06-03 00:46:22,381 INFO  [gpt.py:355 ]   4500  |   1.683081   |  1.814638
+2023-06-03 00:46:40,515 INFO  [gpt.py:355 ]   5000  |   1.646146   |  1.859241
+2023-06-03 00:46:58,336 INFO  [gpt.py:355 ]   5500  |   1.630392   |  1.823818
+2023-06-03 00:47:16,202 INFO  [gpt.py:355 ]   6000  |   1.617136   |  1.827644
+2023-06-03 00:47:34,056 INFO  [gpt.py:355 ]   6500  |   1.620590   |  1.803973
+2023-06-03 00:47:51,790 INFO  [gpt.py:355 ]   7000  |   1.603941   |  1.771371
+2023-06-03 00:48:09,637 INFO  [gpt.py:355 ]   7500  |   1.585188   |  1.795922
+2023-06-03 00:48:27,398 INFO  [gpt.py:355 ]   8000  |   1.571797   |  1.775631
+2023-06-03 00:48:45,287 INFO  [gpt.py:355 ]   8500  |   1.576000   |  1.755093
+2023-06-03 00:49:03,353 INFO  [gpt.py:355 ]   9000  |   1.586222   |  1.786185
+2023-06-03 00:49:21,197 INFO  [gpt.py:355 ]   9500  |   1.542522   |  1.754055
+2023-06-03 00:49:38,983 INFO  [gpt.py:355 ]  10000  |   1.570865   |  1.734348
+2023-06-03 00:49:57,128 INFO  [gpt.py:355 ]  10500  |   1.551173   |  1.748732
+2023-06-03 00:50:15,415 INFO  [gpt.py:355 ]  11000  |   1.536261   |  1.742925
+2023-06-03 00:50:33,369 INFO  [gpt.py:355 ]  11500  |   1.553000   |  1.723701
+2023-06-03 00:50:51,577 INFO  [gpt.py:355 ]  12000  |   1.543971   |  1.702508
+2023-06-03 00:50:51,577 INFO  [gpt.py:357 ] Done training!
+2023-06-03 00:50:51,577 INFO  [gpt.py:359 ] Generating samples:
+2023-06-03 00:50:54,829 INFO  [gpt.py:364 ] ------------------------------
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] CLARDIUS:
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] TrOfford Citizen gretten to me here apps; I make the be and in apon with thinglenouran are will years.
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ]
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] ANGLONUS:
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] What hunces for our see thou praint,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] And Ceitizentry? brack, Serve me well me?
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Wherefore I am bustimest and beding,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] And such ame eastlently; I make so never be belown.
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Can I'll not to Verophed thee theyselish fay men,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] I her yield not pige as to the tire of shy.
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ]
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] BUCKHN OF YORK:
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] And not the buring blustimed inceed,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Of you hope her possXntasting thun is fear;
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] I tealth!
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ]
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Purd
+2023-06-03 00:50:54,829 INFO  [gpt.py:369 ] ------------------------------
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] FLORIZEL:
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Whoce is in that that a suff bearing of thy soars,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Tell him of the Generos, the magarms thousand,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] I'll hath thee: Well behold, I cill hoped into my father,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Yes how you thy note scandow? these fiving content hith to do wey. Whence to dear beggar.
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ]
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] ANGELO:
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Quantage.
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] At the than she? then I mestay we much is be my heart
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Are hath adid news thinking lust.
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ]
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] ANGELO:
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Nay, cannot 'stagued be reword,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] That their slall acquecuty me lie time.
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ]
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] DORD OF YORK:
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Here wear love, I'll nows; you well chart
+2023-06-03 00:50:54,829 INFO  [gpt.py:369 ] ------------------------------
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] NOSMNIA:
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Theneeds, and of him. I am loves?
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Why not Citizen, I thing: here heaths,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Where love this and eyes?
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] What grave his boot, aff'd as in bid it
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] the king of which.
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ]
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] TDBRAY:
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Think, they come
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] And hate, have futhturn a tonguer that He flainst heaved leith
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Towe I flowest
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] she tear in our pointmaniouds wife to Warwick to Rearf,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Sir any he bear with the lack dare of Angerous I,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] Lovend his under thine to the crown,
+2023-06-03 00:50:54,829 INFO  [gpt.py:368 ] The bear to my cold discord will yet me who women, these wreter? how her eas end the w
+2023-06-03 00:50:54,829 INFO  [gpt.py:369 ] ------------------------------
