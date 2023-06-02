@@ -1,0 +1,30 @@
+videos/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Apple garbage
+.DS_Store
+
+# Unit test / coverage reports
+.pytest_cache/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environments
+.env
+
+# vscode
+.vscode/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json

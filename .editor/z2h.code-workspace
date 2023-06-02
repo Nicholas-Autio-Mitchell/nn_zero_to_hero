@@ -1,0 +1,174 @@
+{
+    "folders": [
+        {
+            "path": "../",
+        }
+    ],
+    "settings": {
+        "cSpell.words": [
+            "amodal",
+            "bbox",
+            "cuda",
+            "decel",
+            "deps",
+            "Eigen",
+            "embd",
+            "env",
+            "extrinsics",
+            "hdrs",
+            "hyperparameters",
+            "idx",
+            "itos",
+            "IWYU",
+            "knn",
+            "mnist",
+            "mpss",
+            "mypy",
+            "NOLINT",
+            "NOLINTNEXTLINE",
+            "npt",
+            "Overwatch",
+            "polyline",
+            "pydantic",
+            "pyspark",
+            "srcs",
+            "stoi",
+            "tinyshakespeare",
+            "Unischema"
+        ],
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": false,
+        },
+        "editor.formatOnSave": true,
+        "editor.insertSpaces": true,
+        "editor.rulers": [
+            120
+        ],
+        "editor.tabSize": 4,
+        "files.associations": {
+            "*.cu": "cpp",
+            "*.cuh": "cpp",
+            "*.cul": "cpp",
+            "*.ipynb": "jupyter",
+            "OWNERS": "yaml",
+            "requirements.*": "pip-requirements",
+            "requirements-*.*": "pip-requirements",
+        },
+        "files.exclude": {
+            "**/__pycache__": true,
+        },
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "files.trimTrailingWhitespace": true,
+        "files.watcherExclude": {
+            "**/.git/**": true,
+            "**/.*_cache/**": true,
+            ".clangd/**": true,
+            ".cache/clangd/**": true,
+            "**/.mypy_cache/**": true,
+            "**/node_modules/**": true,
+            "**/.pytest_cache/**": true,
+        },
+        "githubPullRequests.ignoredPullRequestBranches": [
+            "develop"
+        ],
+        "githubPullRequests.queries": [
+            {
+                "label": "Involve Me",
+                "query": "is:open involves:${user}"
+            },
+            {
+                "label": "Waiting For My Review",
+                "query": "is:open review-requested:${user}"
+            },
+            {
+                "label": "Assigned To Me",
+                "query": "is:open assignee:${user}"
+            },
+            {
+                "label": "Created By Me",
+                "query": "is:open author:${user}"
+            },
+            {
+                "label": "Closed By Me",
+                "query": "is:closed author:${user}"
+            },
+        ],
+        "gitlens.remotes": [
+            {
+                "domain": "github.com",
+                "type": "GitHub",
+            }
+        ],
+        "gitweblinks.defaultBranch": "develop",
+        "gitweblinks.linkType": "defaultBranch",
+        "jupyter.interactiveWindow.codeLens.enable": true,
+        "jupyter.showVariableViewWhenDebugging": true,
+        "python.analysis.inlayHints.pytestParameters": false,
+        "python.analysis.typeCheckingMode": "basic",
+        "python.envFile": "${workspaceFolder}/.env", // allows pytest to find PYTHONPATH=.  (project root)
+        "python.formatting.blackArgs": [
+            "--config",
+            "${workspaceFolder}/pyproject.toml"
+        ],
+        "python.formatting.provider": "black",
+        "python.linting.cwd": "",
+        "python.linting.enabled": true,
+        "python.linting.lintOnSave": true,
+        "python.linting.mypyEnabled": true,
+        "python.linting.mypyArgs": [
+            "--ignore-missing-imports",
+            "--no-pretty",
+            "--strict",
+            "--show-column-numbers",
+            "--warn-unreachable",
+            "--config-file",
+            "${workspaceFolder}/pyproject.toml"
+        ],
+        "python.testing.autoTestDiscoverOnSaveEnabled": false,
+        "python.testing.pytestEnabled": true,
+        "[python]": {
+            "editor.tabSize": 4
+        },
+        "ruff.importStrategy": "fromEnvironment",
+        "search.exclude": {
+            "**/.git/**": true,
+            ".mypy_cache": true,
+            ".pytest_cache": true,
+            ".vscode": true,
+            "**/node_modules/**": true,
+        },
+        "search.followSymlinks": false,
+        "[shellscript]": {
+            "editor.tabSize": 4
+        },
+        "terminal.integrated.localEchoLatencyThreshold": -1,
+        "yaml.schemas": {
+            "https://json.schemastore.org/yamllint.json": "*.yaml",
+        },
+        "yaml.customTags": [
+            "!ENV scalar",
+            "!ENV sequence",
+            "tag:yaml.org,2002:python/name:materialx.emoji.to_svg",
+            "tag:yaml.org,2002:python/name:materialx.emoji.twemoji",
+            "tag:yaml.org,2002:python/name:pymdownx.superfences.fence_code_format"
+        ],
+        "extensions": {
+            "recommendations": [
+                "charliermarsh.ruff",
+                "eamodio.gitlens",
+                "ms-vscode-remote.vscode-remote-extensionpack",
+                "ms-python.vscode-pylance",
+                "ms-toolsai.jupyter",
+                "streetsidesoftware.code-spell-checker",
+                "reduckted.vscode-gitweblinks",
+            ],
+            "unwantedRecommendations": [
+                "rust-lang.rust",
+                "azuredevspaces.azds",
+                "bazelbuild.vscode-bazel",
+                "ms-vscode.cpptools",
+            ],
+        }
+    }
+}
