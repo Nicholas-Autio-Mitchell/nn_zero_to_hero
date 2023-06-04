@@ -1,107 +1,64 @@
 """Implement GPT-2 model from scratch, only using torch."""
 
+import argparse
+from collections import OrderedDict
 import logging
 from pathlib import Path
+import sys
 from typing import Optional
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from torch_ort import ORTModule
+
 log = logging.getLogger(Path(__file__).name)
-logging.basicConfig(
-    format="%(asctime)s %(levelname)-5s [%(filename)s:%(lineno)-4d] %(message)s",
-    level=logging.INFO,
-)
 
-# Define hyperparameters at module level
-batch_size = 8  # how many independent sequences will we process in parallel?
-block_size = 32  # what is the maximum context length for predictions?
-max_iters = 12000
-eval_interval = 500
-learning_rate = 1e-3
-eval_iters = 100
-n_blocks = 3
-n_heads = 6
-n_embd = 240  # the size of the embedding dimension - divides evenly by n_heads
+# Model parameters
+block_size = 128  # what is the maximum context length for predictions?
+eval_interval = 1000
+n_blocks = 6
+n_heads = 12
+n_embd = 252  # the size of the embedding dimension - divides evenly by n_heads
 head_embd = n_embd // n_heads
-n_layer = 6
-dropout = 0.2
-
-device = "cpu"  # "mps" if (torch.has_mps and torch.backends.mps.is_available()) else "cpu"
-log.info("Using device: %s", device)
-
-torch.manual_seed(1337)
-
-with open("tinyshakespeare.txt", encoding="utf-8") as f:
-    text = f.read()
-
-chars = sorted(set(text))
-vocab_size = len(chars)
-log.info("All chars: %s", "".join(c if c != "'\n'" else r"\n" for c in chars))
-log.info("vocab_size = %s", vocab_size)
+dropout = 0.3
 
 
-## Tokenize - we want to turn the input data into some kind of numeric representation
-# In our case, as a character level language model, we want representations of characters.
-# Alternative libraries: Google's SentencePiece, OpenAI's tiktoken
-stoi = {s: i for i, s in enumerate(chars)}
-
-itos = dict(enumerate(chars))
-
-
-def encode(text: str) -> list[int]:
+def encode(text: str, stoi: dict[str, int]) -> list[int]:
     """Encode a piece of text into its numerical form: a list of integers."""
     return [stoi[c] for c in text]
 
 
-def decode(enc: list[int]) -> str:
+def decode(enc: list[int], itos: dict[int, str]) -> str:
     """Decode a piece of text into its numerical form: a list of integers."""
     return "".join(itos[i] for i in enc)
 
 
-# The full dataset as a tensor - now has shape (N,)
-data = torch.tensor(encode(text), dtype=torch.long, device=device)
-log.info("data tensor shape = %s", data.shape)
-
-N = len(text)
-n = int(0.9 * N)
-train_data = data[:n]
-val_data = data[n:]
-
-log.info("train_data.shape = %s, val_data.shape = %s", train_data.shape, val_data.shape)
-
-
-def get_batch(split: str, batch_size: int) -> tuple[torch.Tensor, torch.Tensor]:
+def get_batch(splits: dict[str, torch.Tensor], split: str, batch_size: int) -> tuple[torch.Tensor, torch.Tensor]:
     """Generate a random batch of inputs/targets from the named split."""
     assert split in ("train", "val"), f"split must be either 'train' or 'val', received {split}"
-    data = train_data if split == "train" else val_data
-    ix = torch.randint(len(data) - block_size, size=(batch_size,))  # generate batch_size random starting indices
-    x = torch.stack([data[i : i + block_size] for i in ix], dim=0)
-    y = torch.stack([data[i + 1 : i + 1 + block_size] for i in ix], dim=0)
+    split_data = splits[split]  # train_data if split == "train" else val_data
+    ix = torch.randint(len(split_data) - block_size, size=(batch_size,))  # generate batch_size random starting indices
+    x = torch.stack([split_data[i : i + block_size] for i in ix], dim=0)
+    y = torch.stack([split_data[i + 1 : i + 1 + block_size] for i in ix], dim=0)
     return x, y
 
 
 @torch.no_grad()
-def estimate_loss() -> dict[str, torch.Tensor]:
+def estimate_loss(splits: dict[str, torch.Tensor], batch_size: int, eval_iters: int) -> dict[str, torch.Tensor]:
     """Estimate the loss on the train and validation sets."""
     model.eval()
-    splits = ["train", "val"]
     results = {}
     for split_name in splits:
         losses = torch.zeros(eval_iters)
         for k in range(eval_iters):
-            x, y = get_batch(split_name, batch_size)
+            x, y = get_batch(splits, split_name, batch_size)
             _, loss = model(x, y)
             losses[k] = loss
         results[split_name] = losses.mean()
     model.train()
     return results
-
-
-Xb, Yb = get_batch("train", batch_size=4)
-
-log.info("Xb.shape = %s, Yb.shape = %s", Xb.shape, Yb.shape)
 
 
 class Head(nn.Module):
@@ -166,7 +123,7 @@ class MultiHeadAttention(nn.Module):
         super().__init__()
         self.n_heads = n_heads
         self.head_size = head_size
-        self.heads = nn.ModuleList([Head(head_size) for _ in range(n_heads)])
+        self.heads = nn.ModuleDict(OrderedDict([(str(f"head_{i}"), Head(head_size)) for i in range(n_heads)]))
         self.projection = nn.Linear(n_heads * head_size, n_embd)
         self.dropout = nn.Dropout(dropout)
 
@@ -177,7 +134,7 @@ class MultiHeadAttention(nn.Module):
         # The heads are run in parallel, and their outputs are concatenated together.
         # The output of each head is a tensor of shape (batch, block_size, head_size)
         # The output of the multi-head attention mechanism is a tensor of shape (batch, block_size, n_heads * head_size)
-        x = torch.cat([head(x) for head in self.heads], dim=-1)
+        x = torch.cat([head(x) for name, head in self.heads.items()], dim=-1)
         x = self.projection(x)  # (n_heads * head_size, n_embd)(x(batch, block_size, n_heads * head_size)) -> (B, T, C)
         x = self.dropout(x)
         return x
@@ -189,9 +146,13 @@ class FeedForward(nn.Module):
     def __init__(self, n_embd: int, expansion_factor: int = 4) -> None:
         super().__init__()
         self.net = nn.Sequential(
-            nn.Linear(n_embd, n_embd * expansion_factor),
-            nn.GELU(),
-            nn.Linear(n_embd * expansion_factor, n_embd),
+            OrderedDict(
+                [
+                    ("linear1", nn.Linear(n_embd, n_embd * expansion_factor)),
+                    ("gelu", nn.GELU()),
+                    ("linear2", nn.Linear(n_embd * expansion_factor, n_embd)),
+                ]
+            )
         )
         self.dropout = nn.Dropout(dropout)
 
@@ -250,11 +211,15 @@ class BigramLM(nn.Module):
         # Define a LUT for the bigram embeddings
         self.token_embedding_table = nn.Embedding(num_embeddings=vocab_size, embedding_dim=n_embd)
         self.position_embedding_table = nn.Embedding(num_embeddings=block_size, embedding_dim=n_embd)
-        blocks = [Block(n_heads=n_heads, head_size=head_embd) for _ in range(n_blocks)]
-        self.net = nn.Sequential(
-            *blocks,
-            nn.LayerNorm(n_embd),
-        )
+
+        # blocks = [(str(f"block_{i}"), Block(n_heads=n_heads, head_size=head_embd)) for i in range(n_blocks)]
+        net_layers: OrderedDict[str, nn.Module] = OrderedDict()
+        for i in range(n_blocks):
+            name = f"block_{i}"
+            net_layers[name] = Block(n_heads=n_heads, head_size=head_embd)
+        net_layers["layernorm"] = nn.LayerNorm(n_embd)
+        self.net = nn.Sequential(net_layers)
+        # self.net = nn.Sequential(OrderedDict([*blocks, ("layernorm", nn.LayerNorm(n_embd))]))
         self.lm_head = nn.Linear(n_heads * head_embd, vocab_size)
 
     def forward(
@@ -281,6 +246,8 @@ class BigramLM(nn.Module):
 
         if targets is None:
             loss = None
+        elif torch.all(targets == float("-inf")):  # hack to allow onnxRuntime inference without fallback to pytorch
+            loss = None
         else:
             B, T, C = logits.shape  # batch size, block size, vocab size. block_size is the context length/window
             logits = logits.view(B * T, C)
@@ -297,73 +264,143 @@ class BigramLM(nn.Module):
             # Ensure that we never pass in more than the context window size
             context = idx[:, -block_size:]  # (B, T)
             # compute logits from the model - loss is None as we don't supply targets
+            _hack = torch.ones_like(idx, device=idx.device) * float("-inf")
             logits, loss = self(context)
+            # log.warning(">>>>>>>>>>> logits shape: %s -- logits type: %s", logits.shape, type(logits))
+            # log.warning(">>>>>>>>>>> loss value:   %s -- loss type:   %s", loss, type(loss))
             # For the bigram model, we only look at the previous character, so take that out and drop a dim
             logits = logits[:, -1, :]  # (B, T, C) becomes (B, C)
             # squash logits into normalised confidences (~probabilities)
-            probs = F.softmax(logits, dim=1)  # (B, C)
+            probs = F.softmax(logits, dim=-1)  # (B, C)
             # Now we can sample from the probability distribution
-            new_idx = torch.multinomial(probs, 1)  # (B, 1) --  if pred horizon >1, maybe us replacement=True
+            new_idx = torch.multinomial(probs, 1)  # (B, 1) --  if pred horizon >1, maybe use replacement=True
             # Append the newly sampled character indices to the context window before predicting in next iteration
             idx = torch.cat([idx, new_idx], dim=1)  # (B, T+1)
 
         return idx
 
 
-# compare activation functions.
-# xs = torch.linspace(-5, 5, 5000)
-# fig, axs = plt.subplots(1, 1, figsize=(8, 6))
-# axs.plot(xs, torch.tanh(xs), lw=5, alpha=0.5)
-# axs.plot(xs, torch.nn.functional.relu(xs), lw=5, alpha=0.5)
-# axs.plot(xs, gelu(xs), lw=5, alpha=0.9)
-# axs.plot(xs, torch.sigmoid(xs), lw=5, alpha=0.5)
-# axs.legend(["tanh", "relu", "gelu", "gelu_exact"])
-# # set xlimits to be -2, +2:
-# axs.set_xlim(-4, 4)
-# axs.set_ylim(-2, 4)
-# axs.set_title("Activation functions")
-# plt.show()
+def load_data() -> tuple[dict[str, torch.Tensor], int, dict[str, int], dict[int, str]]:
+    """Create data splits from input file."""
+
+    with open("tinyshakespeare.txt", encoding="utf-8") as f:
+        text = f.read()
+
+    chars = sorted(set(text))
+    vocab_size = len(chars)
+    log.info("All chars: %s", "".join(c if c != "\n" else r"\n" for c in chars))
+    log.info("vocab_size = %s", vocab_size)
+
+    ## Tokenize - we want to turn the input data into some kind of numeric representation
+    # In our case, as a character level language model, we want representations of characters.
+    # Alternative libraries: Google's SentencePiece, OpenAI's tiktoken
+    stoi = {s: i for i, s in enumerate(chars)}
+
+    itos = dict(enumerate(chars))
+
+    # The full dataset as a tensor - now has shape (N,)
+    data = torch.tensor(encode(text, stoi), dtype=torch.long, device=device)
+    log.info("data tensor shape = %s", data.shape)
+
+    N = len(text)
+    n = int(0.9 * N)
+    train_data = data[:n]
+    val_data = data[n:]
+
+    log.info("train_data.shape = %s, val_data.shape = %s", train_data.shape, val_data.shape)
+    data_splits = {"train": train_data, "val": val_data}
+
+    Xb, Yb = get_batch(data_splits, "train", batch_size=4)
+    log.info("Xb.shape = %s, Yb.shape = %s", Xb.shape, Yb.shape)
+
+    return data_splits, vocab_size, stoi, itos
+
+
+def parse_args() -> argparse.Namespace:
+    """Parse command line arguments, otherwise use sensible defaults."""
+    parser = argparse.ArgumentParser(description="Train a bigram language model.")
+    parser.add_argument("--max_iters", type=int, default=20_000, help="Number of optimisation steps.")
+    parser.add_argument("--batch_size", type=int, default=32, help="Batch size.")
+    parser.add_argument("--lr", type=float, default=0.001, help="Learning rate.")
+    parser.add_argument("--max_new_tokens", type=int, default=500, help="Max new tokens to generate.")
+    parser.add_argument("--eval_interval", type=int, default=1000, help="Number of eval batches to compute.")
+    parser.add_argument("--eval_iters", type=int, default=100, help="Number of eval batches to compute.")
+    parser.add_argument("--skip_generate", action="store_true", help="Pass to skip text generation.")
+    parser.add_argument("--generate_n_samples", default=3, type=int, help="Number of independent samples to generate.")
+    parser.add_argument("--onnx_runtime", action="store_true", help="Use ONNX runtime for training loop.")
+    parser.add_argument("--seed", type=int, default=1337, help="Random seed.")
+    parser.add_argument("--cuda", type=int, required=True, help="ID of target cuda device, builds f'cuda:{--cuda}'.")
+    args = parser.parse_args()
+    return args
 
 
 if __name__ == "__main__":
+    args = parse_args()
+
+    logging.basicConfig(
+        format="%(asctime)s %(levelname)-5s [%(filename)s:%(lineno)-4d] %(message)s",
+        level=logging.INFO,
+    )
+
+    device = f"cuda:{args.cuda}"
+    log.info("Using device: %s", device)
+    torch.manual_seed(args.seed)
+    torch.cuda.manual_seed(args.seed)
+
+    data_splits, vocab_size, stoi, itos = load_data()
+
     model = BigramLM(vocab_size)
     model = model.to(device)
+
+    if args.onnx_runtime:
+        log.info("Wrapping model in ONNX runtime for faster training...")
+        model = ORTModule(model)
+    else:
+        # If we had a newer GPU, we could use pytorch 2.0's torch.compile(model) here.
+        log.info("Using native pytorch model...")
+
     total_params = sum(p.numel() for p in model.parameters())
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
 
     log.info("Model trainable parameters: %s", trainable_params)
     log.info("Model total parameters:     %s", total_params)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, "min", patience=10, verbose=True)
 
     log.info("Training the model...")
 
-    log.info("------------------------------------")
-    log.info("  step  |  train loss  |  val loss  ")
-    log.info("------------------------------------")
-
-    for step in range(max_iters + 1):
-        xb, yb = get_batch("train", batch_size)
+    for step in range(args.max_iters + 1):
+        xb, yb = get_batch(data_splits, "train", args.batch_size)
         logits, loss = model(xb, yb)
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
         optimizer.step()
 
-        if step % eval_interval in (0, max_iters):
-            eval_results = estimate_loss()
+        if step == 0:
+            log.info("------------------------------------")
+            log.info("  step  |  train loss  |  val loss  ")
+            log.info("------------------------------------")
+
+        if step % args.eval_interval in (0, args.max_iters):
+            eval_results = estimate_loss(data_splits, args.batch_size, args.eval_iters)
             t, v = eval_results["train"].item(), eval_results["val"].item()
             log.info("%s", f"{step:>6}  |   {t:.6f}   |  {v:.6f}")
+            scheduler.step(v)
 
     log.info("Done training!")
 
+    if args.skip_generate:
+        log.info("Skipping text generation.")
+        sys.exit(0)
+
     log.info("Generating samples:")
-    num_samples = 3
-    seed_idx = torch.zeros((num_samples, block_size), dtype=torch.long, device=device)
-    out = model.generate(idx=seed_idx, max_new_tokens=500)
+    seed_idx = torch.zeros((args.generate_n_samples, block_size), dtype=torch.long, device=device)
+    out = model.generate(idx=seed_idx, max_new_tokens=args.max_new_tokens)
 
     log.info("------------------------------")
-    for generated_batch in range(num_samples):
-        decoded_text = decode(out[generated_batch].tolist()).strip()
-        for line in decoded_text.split("\n"):
+    for generated_batch in range(args.generate_n_samples):
+        decoded_lines = decode(out[generated_batch].tolist(), itos).strip().split("\n")
+        for line in decoded_lines:
             log.info(line)
         log.info("------------------------------")

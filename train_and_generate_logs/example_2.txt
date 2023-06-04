@@ -1,0 +1,97 @@
+
+
+ $ ▶ python gpt.py
+2023-06-03 10:56:43,487 INFO  [gpt.py:31  ] Using device: cuda:1
+2023-06-03 10:56:43,498 INFO  [gpt.py:40  ] All chars:
+ !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+2023-06-03 10:56:43,498 INFO  [gpt.py:41  ] vocab_size = 65
+2023-06-03 10:56:44,596 INFO  [gpt.py:64  ] data tensor shape = torch.Size([1115394])
+2023-06-03 10:56:44,597 INFO  [gpt.py:71  ] train_data.shape = torch.Size([1003854]), val_data.shape = torch.Size([111540])
+2023-06-03 10:56:44,620 INFO  [gpt.py:103 ] Xb.shape = torch.Size([4, 156]), Yb.shape = torch.Size([4, 156])
+2023-06-03 10:56:44,845 INFO  [gpt.py:333 ] Model trainable parameters: 22295105
+2023-06-03 10:56:44,845 INFO  [gpt.py:334 ] Model total parameters:     22295105
+2023-06-03 10:56:44,846 INFO  [gpt.py:340 ] Training the model...
+2023-06-03 10:56:44,846 INFO  [gpt.py:342 ] ------------------------------------
+2023-06-03 10:56:44,846 INFO  [gpt.py:343 ]   step  |  train loss  |  val loss
+2023-06-03 10:56:44,846 INFO  [gpt.py:344 ] ------------------------------------
+2023-06-03 10:56:51,035 INFO  [gpt.py:356 ]      0  |   4.072097   |  4.125266
+2023-06-03 10:58:37,044 INFO  [gpt.py:356 ]   1000  |   1.594548   |  1.784783
+2023-06-03 11:00:23,980 INFO  [gpt.py:356 ]   2000  |   1.428324   |  1.640146
+2023-06-03 11:02:11,158 INFO  [gpt.py:356 ]   3000  |   1.326213   |  1.572684
+2023-06-03 11:03:58,318 INFO  [gpt.py:356 ]   4000  |   1.262583   |  1.541425
+2023-06-03 11:05:45,513 INFO  [gpt.py:356 ]   5000  |   1.207573   |  1.513937
+2023-06-03 11:07:32,687 INFO  [gpt.py:356 ]   6000  |   1.169758   |  1.490851
+2023-06-03 11:09:19,834 INFO  [gpt.py:356 ]   7000  |   1.124456   |  1.495155
+2023-06-03 11:11:06,989 INFO  [gpt.py:356 ]   8000  |   1.080274   |  1.512436
+2023-06-03 11:12:54,109 INFO  [gpt.py:356 ]   9000  |   1.033823   |  1.525889
+2023-06-03 11:14:41,256 INFO  [gpt.py:356 ]  10000  |   0.986925   |  1.547986
+2023-06-03 11:16:28,441 INFO  [gpt.py:356 ]  11000  |   0.954268   |  1.553661
+2023-06-03 11:18:15,605 INFO  [gpt.py:356 ]  12000  |   0.905117   |  1.613592
+2023-06-03 11:20:02,748 INFO  [gpt.py:356 ]  13000  |   0.865271   |  1.611521
+2023-06-03 11:21:49,860 INFO  [gpt.py:356 ]  14000  |   0.818373   |  1.657755
+2023-06-03 11:23:36,979 INFO  [gpt.py:356 ]  15000  |   0.773041   |  1.701139
+2023-06-03 11:25:24,115 INFO  [gpt.py:356 ]  16000  |   0.722737   |  1.738456
+2023-06-03 11:27:11,224 INFO  [gpt.py:356 ]  17000  |   0.692024   |  1.778484
+Epoch 00018: reducing learning rate of group 0 to 1.0000e-04.
+2023-06-03 11:28:58,355 INFO  [gpt.py:356 ]  18000  |   0.566444   |  1.831178
+2023-06-03 11:30:45,497 INFO  [gpt.py:356 ]  19000  |   0.529280   |  1.875418
+2023-06-03 11:32:32,624 INFO  [gpt.py:356 ]  20000  |   0.501471   |  1.923956
+2023-06-03 11:34:19,810 INFO  [gpt.py:356 ]  21000  |   0.483955   |  2.002915
+2023-06-03 11:36:06,928 INFO  [gpt.py:356 ]  22000  |   0.462426   |  2.007164
+2023-06-03 11:37:54,101 INFO  [gpt.py:356 ]  23000  |   0.445224   |  2.029942
+2023-06-03 11:39:41,233 INFO  [gpt.py:356 ]  24000  |   0.424475   |  2.068556
+2023-06-03 11:41:28,405 INFO  [gpt.py:356 ]  25000  |   0.412356   |  2.098908
+2023-06-03 11:41:28,406 INFO  [gpt.py:359 ] Done training!
+2023-06-03 11:41:28,406 INFO  [gpt.py:361 ] Generating samples:
+2023-06-03 11:41:41,675 INFO  [gpt.py:366 ] ------------------------------
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] KOPCA:
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] Why, then you must have to go together natural.
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ]
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] AUTOLYCUS:
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] Here's Aufidius, and his sickness: he does read
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] To mistrust the people, I must understand,
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] And make 't no mourn than a war.
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] If any man that are rosemary, gentlemen,
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] Do this dear misfortune to purge him that till she
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] Shall be the contrary, so least to be beheld
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] In pay the gods: to the whom, there is none;
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] My hungry ballad, that is my great-graven met
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] Before disgrave: 'tis thought to do it,
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] And then, and hath to in the morning,
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] But
+2023-06-03 11:41:41,676 INFO  [gpt.py:371 ] ------------------------------
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] Shchoos, are a lie; the limaginer hath made given away
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] on colours' eyes: no, thither can reign a good
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] one word, and thus comes the warrant of the
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] duke. But what's the physic drabs no more but
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] fools, which is an eunuch, friends, and a good friend and as
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] standing in the flower, answering none of his pleasure.
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ]
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] AUTOLYCUS:
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] I hope so, sir.
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] I shall guess thy mind; which I shall bear you
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] A part. O thou ha! a prize! thy sun granting sword!
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] But sup the moon that spares out to death,
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] And not the mire be s
+2023-06-03 11:41:41,676 INFO  [gpt.py:371 ] ------------------------------
+2023-06-03 11:41:41,676 INFO  [gpt.py:370 ] ROMEO:
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] An thou dismiss on ear, thou banish tears.
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ]
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] ROMEO:
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] Were news the world since I have forgot,
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] Incapable against myself, which think
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] My wounded villany stole my father.
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ]
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] LADY ANNE:
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] My lord, with I give thee queen, King Richard come
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] To help me to my state and to Bolingbroke
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] You kiss it in a pitch observation:
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] What I am, untimely to sob a botch.
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ]
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] Servant:
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] It is Sicilia a but well king and not what:
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] It is, I'll tear thee as young Henry.
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ]
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] GLOUCESTER:
+2023-06-03 11:41:41,677 INFO  [gpt.py:370 ] Whither thou go'st, the king is bird of love;
+2023-06-03 11:41:41,677 INFO  [gpt.py:371 ] ------------------------------
