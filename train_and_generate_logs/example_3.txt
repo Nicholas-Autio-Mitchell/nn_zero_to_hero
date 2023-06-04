@@ -1,0 +1,89 @@
+Example training in ONNXruntime.  Poorly parametrised -> overfitting.
+
+2023-06-04 12:47:49,960 INFO  [gpt.py:336 ] Model trainable parameters: 9240401
+2023-06-04 12:47:49,960 INFO  [gpt.py:337 ] Model total parameters:     9240401
+2023-06-04 12:47:49,961 INFO  [gpt.py:342 ] Training the model...
+2023-06-04 12:47:49,961 INFO  [gpt.py:344 ] ------------------------------------
+2023-06-04 12:47:49,961 INFO  [gpt.py:345 ]   step  |  train loss  |  val loss
+2023-06-04 12:47:49,961 INFO  [gpt.py:346 ] ------------------------------------
+2023-06-04 12:48:40,928 INFO  [gpt.py:358 ]      0  |   3.552370   |  3.583918
+2023-06-04 12:51:19,865 INFO  [gpt.py:358 ]   1000  |   1.545539   |  1.732212
+2023-06-04 12:54:00,229 INFO  [gpt.py:358 ]   2000  |   1.351324   |  1.582847
+2023-06-04 12:56:41,238 INFO  [gpt.py:358 ]   3000  |   1.268365   |  1.529661
+2023-06-04 12:59:21,531 INFO  [gpt.py:358 ]   4000  |   1.210394   |  1.490011
+2023-06-04 13:02:03,034 INFO  [gpt.py:358 ]   5000  |   1.172159   |  1.481873
+2023-06-04 13:04:43,337 INFO  [gpt.py:358 ]   6000  |   1.130074   |  1.485883
+2023-06-04 13:07:25,024 INFO  [gpt.py:358 ]   7000  |   1.096105   |  1.486524
+2023-06-04 13:10:06,547 INFO  [gpt.py:358 ]   8000  |   1.065134   |  1.484816
+2023-06-04 13:12:46,781 INFO  [gpt.py:358 ]   9000  |   1.024819   |  1.490951
+2023-06-04 13:15:27,952 INFO  [gpt.py:358 ]  10000  |   0.997859   |  1.506850
+2023-06-04 13:18:08,534 INFO  [gpt.py:358 ]  11000  |   0.968188   |  1.525402
+2023-06-04 13:20:48,354 INFO  [gpt.py:358 ]  12000  |   0.938652   |  1.554503
+2023-06-04 13:23:28,053 INFO  [gpt.py:358 ]  13000  |   0.911245   |  1.535845
+2023-06-04 13:26:07,721 INFO  [gpt.py:358 ]  14000  |   0.877993   |  1.548286
+2023-06-04 13:28:47,493 INFO  [gpt.py:358 ]  15000  |   0.855879   |  1.579761
+2023-06-04 13:31:27,454 INFO  [gpt.py:358 ]  16000  |   0.827342   |  1.592890
+Epoch 00017: reducing learning rate of group 0 to 1.0000e-04.
+2023-06-04 13:34:07,213 INFO  [gpt.py:358 ]  17000  |   0.757842   |  1.595392
+2023-06-04 13:36:46,981 INFO  [gpt.py:358 ]  18000  |   0.736243   |  1.622041
+2023-06-04 13:39:26,643 INFO  [gpt.py:358 ]  19000  |   0.719356   |  1.636380
+2023-06-04 13:42:06,473 INFO  [gpt.py:358 ]  20000  |   0.705265   |  1.643733
+2023-06-04 13:42:06,473 INFO  [gpt.py:361 ] Done training!
+2023-06-04 13:42:06,473 INFO  [gpt.py:363 ] Generating samples:
+2023-06-04 13:42:30,109 INFO  [gpt.py:368 ] ------------------------------
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ] DUKond yet.
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ] How now, what?
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ]
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ] POMPEY:
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ] If it be his robe, know you are well enough. He
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ] was not sometime point with this cold blow a tyrannous him!
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ] Come on, and I are sold fearful: he speaks both
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ] Patiences; melant lives on thee.
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ]
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ] BRUTUS:
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ] Proceeds him to stand between our party hence:
+2023-06-04 13:42:30,110 INFO  [gpt.py:372 ] That was the power of nobleness to his night;
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] Now my treasuries hod on the wing for his
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] sisterly, to be worth our bents, we weigh on our success
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] as they were bad of the house: the people
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] scandal, his old counsel, have p
+2023-06-04 13:42:30,111 INFO  [gpt.py:373 ] ------------------------------
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] TRRIVERD:
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] For it is fectly.
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ]
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] MENENIUS:
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] What serves Corlanus in?
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ]
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] MENENIUS:
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] The goodness is matter. Our pompetual, citizens
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] You shall use--in the sudde is odd; here on pride
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] To primch the envils to put these and natures?
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ]
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] DUKE VINCENTIO:
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] Well, then: camillet. Death'd Is fearful so finish.
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] Welcome, what news? what? where are your command?
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ]
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] TYBALT:
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] I shall be the city fiery out.
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ]
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] JULIET:
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] Not a rascal night in this thy inclu which
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] Ten to die contented he in the figurest age
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] Wives with majesty and ne
+2023-06-04 13:42:30,111 INFO  [gpt.py:373 ] ------------------------------
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] CLEOMPEN:
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] Noble battle; but it wasted for a couple thing
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] when seems to fall kings estimation.
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] Against thy complaining emmen quickly kiss;
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] Thy adverty guide out down thy loving war,
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] Which often with sorrow bright fallows up to-day,
+2023-06-04 13:42:30,111 INFO  [gpt.py:372 ] To-day the infantant dige of my poor eye
+2023-06-04 13:42:30,112 INFO  [gpt.py:372 ] Was childred or out the door: O rest our grace,
+2023-06-04 13:42:30,112 INFO  [gpt.py:372 ] I think I may meet for death waywardly taken,
+2023-06-04 13:42:30,112 INFO  [gpt.py:372 ] That ne'er may lend the king my life and smother,
+2023-06-04 13:42:30,112 INFO  [gpt.py:372 ] Come, braving your perpetencoint: poor youth,
+2023-06-04 13:42:30,112 INFO  [gpt.py:372 ] I would not spy her.
+2023-06-04 13:42:30,112 INFO  [gpt.py:372 ]
+2023-06-04 13:42:30,112 INFO  [gpt.py:372 ] SICINIUS:
+2023-06-04 13:42:30,112 INFO  [gpt.py:372 ] Rememb
+2023-06-04 13:42:30,112 INFO  [gpt.py:373 ] ------------------------------
