@@ -1,4 +1,4 @@
-Example training in ONNXruntime.  Poorly parametrised -> overfitting.
+Example training in ONNXruntime (~25% faster). Poorly parametrised -> overfitting.
 
 2023-06-04 12:47:49,960 INFO  [gpt.py:336 ] Model trainable parameters: 9240401
 2023-06-04 12:47:49,960 INFO  [gpt.py:337 ] Model total parameters:     9240401
